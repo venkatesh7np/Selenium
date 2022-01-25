@@ -5,22 +5,34 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Webtables {
     WebDriver driver;
+    String URL="https://www.techlistic.com/p/demo-selenium-practice.html";
+    String Node="http://192.168.0.112:4444";
+
 
     @BeforeTest
-    public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+    public void setup() throws MalformedURLException {
+        DesiredCapabilities dcp= new DesiredCapabilities();
+        dcp.setBrowserName("chrome");
+        driver=new RemoteWebDriver(new URL(Node),dcp);
+
+        //WebDriverManager.chromedriver().setup();
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.get("https://www.techlistic.com/p/demo-selenium-practice.html");
+        driver.get(URL);
 
     }
 
